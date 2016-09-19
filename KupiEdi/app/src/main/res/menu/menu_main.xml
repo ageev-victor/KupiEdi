@@ -1,0 +1,37 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Activity.MainActivity">
+
+    <item
+        android:id="@+id/savelist"
+        android:orderInCategory="1"
+        android:title="@string/menu_save_btn"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/loadList"
+        android:orderInCategory="2"
+        android:title="@string/menu_load_btn"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/clearList"
+        android:orderInCategory="3"
+        android:title="@string/delListFromDb"
+        app:showAsAction="never"
+        android:onClick="delListFromDataBase"/>
+
+    <item
+        android:id="@+id/settings"
+        android:orderInCategory="4"
+        android:title="@string/settings"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/about"
+        android:orderInCategory="5"
+        android:title="@string/about_programm"
+        app:showAsAction="never" />
+
+</menu>

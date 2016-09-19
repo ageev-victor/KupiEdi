@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".Activity.MainActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/font_food"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/edTxtEnterFood"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="@drawable/font_food_name"
+            android:hint="Название :"
+            android:inputType="text"
+            android:maxLength="20"
+            android:paddingLeft="10dp"
+            android:textStyle="italic" />
+
+        <ImageButton
+            android:id="@+id/voiceButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:background="#00ffffff"
+            android:onClick="recVoice"
+            android:src="@drawable/rec_voice_48" />
+
+        <ImageButton
+            android:id="@+id/btnAddFood"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="#00ffffff"
+            android:onClick="addFoodToTable"
+            android:src="@drawable/btn_add_normal" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/buttonsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/linearLayout"
+        android:background="@drawable/layout_buttons_font"
+        android:gravity="center_vertical|center_horizontal">
+
+        <Button
+            android:id="@+id/btnFood1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:maxLines="2"
+            android:layout_margin="3dp"
+            android:background="@drawable/buttonsfont"
+            android:textSize="10dp"
+            android:visibility="invisible"
+            android:padding="1dp"
+            android:gravity="center_vertical|center_horizontal" />
+
+        <Button
+            android:id="@+id/btnFood2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:maxLines="2"
+            android:layout_margin="3dp"
+            android:background="@drawable/buttonsfont"
+            android:textSize="10dp"
+            android:visibility="invisible"
+            android:padding="1dp"
+            android:gravity="center_vertical|center_horizontal" />
+
+        <Button
+            android:id="@+id/btnFood3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:maxLines="2"
+            android:layout_margin="3dp"
+            android:background="@drawable/buttonsfont"
+            android:textSize="10dp"
+            android:visibility="invisible"
+            android:padding="1dp"
+            android:gravity="center_vertical|center_horizontal" />
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:id="@+id/frameLyout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/main_font"
+        android:layout_marginTop="50dp">
+
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignLeft="@+id/frameLyout"
+            android:layout_alignStart="@+id/frameLyout"
+            android:layout_below="@+id/frameLyout"
+            android:layout_gravity="center"
+            android:layout_marginBottom="45dp"
+            android:layout_marginLeft="13dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="50dp">
+
+            <TableLayout
+                android:id="@+id/tableListFood"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+
+            </TableLayout>
+        </ScrollView>
+
+    </FrameLayout>
+
+
+</RelativeLayout>
