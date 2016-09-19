@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     public static Typeface defaultTypeface;
     public static int defaultTextSize = 18;
     public static ArrayList<String> foodNames = new ArrayList<>();
-    LinearLayout linearLayout;
+    LinearLayout buttonsLayout;
     RelativeLayout mainLayout;
 
 
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         initViews();
         initFoodDB();
-        mainLayout.removeView(linearLayout);
+        //mainLayout.removeView(buttonsLayout);
     }
 
     private void setupFloatingButton() {
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 rows.clear();
                 if (mainLayout.getChildCount() == 3) {
                     edTxtEnterFood.setText("");
-                    mainLayout.removeView(linearLayout);
+                    mainLayout.removeView(buttonsLayout);
 
                 }
                 Snackbar.make(view, R.string.list_cleared, Snackbar.LENGTH_SHORT)
@@ -219,7 +219,7 @@ public class MainActivity extends AppCompatActivity {
         addOnClickListenerToEditText();
         setFontSize();
         setFontStyle();
-        linearLayout = (LinearLayout) findViewById(R.id.buttonsLayout);
+        buttonsLayout = (LinearLayout) findViewById(R.id.buttonsLayout);
         mainLayout = (RelativeLayout) findViewById(R.id.main_layout);
     }
 
@@ -229,34 +229,36 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 doAllButtonsInvisible();
-                if (mainLayout.getChildCount() == 2) {
-                    mainLayout.addView(linearLayout);
-                }
-                if (s.length() > 0) {
-                    String text = String.valueOf(s);
-                    ArrayList<String> names = DatabaseHelper.getInstance(getApplicationContext()).getCoincidenceFromDB(text);
-                    if (names.size() == 1) {
-                        foodBtn1.setVisibility(View.VISIBLE);
-                        foodBtn1.setText(names.get(0));
-                    }
+                if (s.length() == 0) {
+                    mainLayout.removeView(buttonsLayout);
+                } else {
+                    if (s.length() > 0) {
+                        if (mainLayout.getChildCount() == 2) {
+                            mainLayout.addView(buttonsLayout);
+                        }
+                        String text = String.valueOf(s);
+                        ArrayList<String> names = DatabaseHelper.getInstance(getApplicationContext()).getCoincidenceFromDB(text);
 
-                    if (names.size() == 2) {
-                        foodBtn1.setText(names.get(0));
-                        foodBtn2.setText(names.get(1));
-                        foodBtn1.setVisibility(View.VISIBLE);
-                        foodBtn2.setVisibility(View.VISIBLE);
+                        if (names.size() == 1) {
+                            foodBtn1.setVisibility(View.VISIBLE);
+                            foodBtn1.setText(names.get(0));
+                        }
+                        switch (names.size()) {
+                            case 2: {
+                                foodBtn1.setText(names.get(0));
+                                foodBtn2.setText(names.get(1));
+                                foodBtn1.setVisibility(View.VISIBLE);
+                                foodBtn2.setVisibility(View.VISIBLE);
+                            }
+                            case 3: {
+                                foodBtn1.setText(names.get(0));
+                                foodBtn2.setText(names.get(1));
+                                foodBtn3.setText(names.get(2));
+                                doAllButtonsVisible();
+                            }
+                            names.clear();
+                        }
                     }
-
-                    if (names.size() == 3) {
-                        foodBtn1.setText(names.get(0));
-                        foodBtn2.setText(names.get(1));
-                        foodBtn3.setText(names.get(2));
-                        doAllButtonsVisible();
-                    }
-                    if (names.size() == 0) {
-                        mainLayout.removeView(linearLayout);
-                    }
-                    names.clear();
                 }
             }
 
@@ -291,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
                 tableListFood.addView(row);
                 edTxtEnterFood.setText("");
                 doAllButtonsInvisible();
-                mainLayout.removeView(linearLayout);
+                mainLayout.removeView(buttonsLayout);
             }
         });
         foodBtn2.setOnClickListener(new View.OnClickListener() {
@@ -302,7 +304,7 @@ public class MainActivity extends AppCompatActivity {
                 tableListFood.addView(row);
                 edTxtEnterFood.setText("");
                 doAllButtonsInvisible();
-                mainLayout.removeView(linearLayout);
+                mainLayout.removeView(buttonsLayout);
 
             }
         });
@@ -314,7 +316,7 @@ public class MainActivity extends AppCompatActivity {
                 tableListFood.addView(row);
                 edTxtEnterFood.setText("");
                 doAllButtonsInvisible();
-                mainLayout.removeView(linearLayout);
+                mainLayout.removeView(buttonsLayout);
 
             }
         });
