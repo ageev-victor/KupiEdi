@@ -99,7 +99,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
         return lists;
     }
 
-    public ArrayList<String> getCoincidenceFromDB(CharSequence text) {
+    /*public ArrayList<String> getCoincidenceFromDB(CharSequence text) {
         ArrayList<String> foodNames = new ArrayList<>();
         Cursor cursor = dataBase.rawQuery("SELECT product_name FROM foodTable WHERE product_name LIKE '" + text + "%' LIMIT 3", null);
         while (cursor.moveToNext()) {
@@ -108,7 +108,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
         }
         cursor.close();
         return foodNames;
-    }
+    }*/
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {

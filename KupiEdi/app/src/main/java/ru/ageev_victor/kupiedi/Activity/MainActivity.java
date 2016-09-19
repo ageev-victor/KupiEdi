@@ -37,6 +37,7 @@ import java.util.ArrayList;
 
 import ru.ageev_victor.kupiedi.Objects.DataFromDataBase;
 import ru.ageev_victor.kupiedi.Objects.DatabaseHelper;
+import ru.ageev_victor.kupiedi.Objects.Finder;
 import ru.ageev_victor.kupiedi.Objects.Row;
 import ru.ageev_victor.kupiedi.R;
 
@@ -52,10 +53,9 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<Row> rows = new ArrayList<>();
     public static Typeface defaultTypeface;
     public static int defaultTextSize = 18;
-    public static ArrayList<String> foodNames = new ArrayList<>();
     LinearLayout buttonsLayout;
     RelativeLayout mainLayout;
-
+    Finder finder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +63,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         initViews();
-        initFoodDB();
-        //mainLayout.removeView(buttonsLayout);
+        finder = new Finder(this.getApplicationContext());
     }
 
     private void setupFloatingButton() {
@@ -229,36 +228,43 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 doAllButtonsInvisible();
-                if (s.length() == 0) {
+                ArrayList<String> foodMatches = finder.getMatches(s);
+                Log.d("Info", String.valueOf(foodMatches.size()));
+                if (s.length() == 0 & (mainLayout.getChildCount() > 2)) {
                     mainLayout.removeView(buttonsLayout);
                 } else {
-                    if (s.length() > 0) {
-                        if (mainLayout.getChildCount() == 2) {
-                            mainLayout.addView(buttonsLayout);
-                        }
-                        String text = String.valueOf(s);
-                        ArrayList<String> names = DatabaseHelper.getInstance(getApplicationContext()).getCoincidenceFromDB(text);
-
-                        if (names.size() == 1) {
-                            foodBtn1.setVisibility(View.VISIBLE);
-                            foodBtn1.setText(names.get(0));
-                        }
-                        switch (names.size()) {
-                            case 2: {
-                                foodBtn1.setText(names.get(0));
-                                foodBtn2.setText(names.get(1));
-                                foodBtn1.setVisibility(View.VISIBLE);
-                                foodBtn2.setVisibility(View.VISIBLE);
-                            }
-                            case 3: {
-                                foodBtn1.setText(names.get(0));
-                                foodBtn2.setText(names.get(1));
-                                foodBtn3.setText(names.get(2));
-                                doAllButtonsVisible();
-                            }
-                            names.clear();
-                        }
+                    if (mainLayout.getChildCount() > 2) {
+                        mainLayout.removeView(buttonsLayout);
                     }
+                    mainLayout.addView(buttonsLayout);
+
+                    switch (foodMatches.size()) {
+                        case 1: {
+                            foodBtn1.setVisibility(View.VISIBLE);
+                            foodBtn1.setText(foodMatches.get(0));
+                            break;
+                        }
+                        case 2: {
+                            foodBtn1.setText(foodMatches.get(0));
+                            foodBtn2.setText(foodMatches.get(1));
+                            foodBtn1.setVisibility(View.VISIBLE);
+                            foodBtn2.setVisibility(View.VISIBLE);
+                            break;
+                        }
+
+                    }
+
+                    if (foodMatches.size() >= 3) {
+                        foodBtn1.setText(foodMatches.get(0));
+                        Log.d("Info", String.valueOf(foodMatches.get(0)));
+                        foodBtn2.setText(foodMatches.get(1));
+                        Log.d("Info", String.valueOf(foodMatches.get(1)));
+                        foodBtn3.setText(foodMatches.get(2));
+                        Log.d("Info", String.valueOf(foodMatches.get(2)));
+                        doAllButtonsVisible();
+                    }
+
+                    foodMatches.clear();
                 }
             }
 
@@ -392,24 +398,6 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(speechIntent, RESULT_SPEECH_TO_TEXT);
     }
 
-    private void initFoodDB() {
-        try {
-            InputStream inputStream = getResources().openRawResource(R.raw.foodbase);
-            if (inputStream != null) {
-                InputStreamReader isr = new InputStreamReader(inputStream);
-                BufferedReader reader = new BufferedReader(isr);
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    foodNames.add(line);
-                }
-                inputStream.close();
-            }
-        } catch (Throwable t) {
-            Toast.makeText(getApplicationContext(),
-                    "Exception: " + t.toString(), Toast.LENGTH_LONG).show();
-        }
-        DatabaseHelper.getInstance(this).createListFoodDB(foodNames);
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

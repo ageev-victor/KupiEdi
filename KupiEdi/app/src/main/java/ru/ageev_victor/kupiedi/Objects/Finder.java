@@ -1,0 +1,59 @@
+package ru.ageev_victor.kupiedi.Objects;
+
+import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+
+import ru.ageev_victor.kupiedi.R;
+
+public class Finder {
+
+    private Context context;
+    public ArrayList<String> foodNames = new ArrayList<>();
+    public ArrayList<String> foodMatches = new ArrayList<>();
+
+    public Finder(Context context) {
+        this.context = context;
+        initFoodDB();
+    }
+
+    public ArrayList<String> getFoodNames() {
+        return foodNames;
+    }
+
+    public ArrayList<String> getMatches(CharSequence ch) {
+        for (String name : foodNames) {
+            //Log.d("Info", substring);
+            //Log.d("Info", ch.toString());
+            if (name.startsWith(String.valueOf(ch))) {
+                //Log.d("Info", "1111");
+                foodMatches.add(name);
+            }
+        }
+        return foodMatches;
+    }
+
+    private void initFoodDB() {
+        try {
+            InputStream inputStream = context.getResources().openRawResource(R.raw.foodbase);
+            if (inputStream != null) {
+                InputStreamReader isr = new InputStreamReader(inputStream);
+                BufferedReader reader = new BufferedReader(isr);
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    foodNames.add(line);
+                }
+                inputStream.close();
+            }
+        } catch (Throwable t) {
+           /* Toast.makeText(context.getApplicationContext(),
+                    "Exception: " + t.toString(), Toast.LENGTH_LONG).show();*/
+        }
+    }
+}
