@@ -349,9 +349,10 @@ public class MainActivity extends AppCompatActivity {
         String foodname = edTxtEnterFood.getText().toString();
         if (!(foodname.equals("") | foodname.equals(" "))) {
             Row row = new Row(this, edTxtEnterFood.getText().toString());
-            tableListFood.addView(row);
-            edTxtEnterFood.setText(" ");
             rows.add(row);
+            tableListFood.addView(row);
+            edTxtEnterFood.setText("");
+            mainLayout.removeView(buttonsLayout);
         }
     }
 
