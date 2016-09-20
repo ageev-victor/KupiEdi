@@ -106,8 +106,16 @@ public class MainActivity extends AppCompatActivity {
         if (!(rows.isEmpty())) {
             saveList("tempTable");
         }
+
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (!(rows.isEmpty())) {
+            saveList("tempTable");
+        }
+    }
 
     private void setFontSize() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);

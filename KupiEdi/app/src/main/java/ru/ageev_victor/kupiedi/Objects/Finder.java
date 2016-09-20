@@ -1,15 +1,11 @@
 package ru.ageev_victor.kupiedi.Objects;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
-
 import ru.ageev_victor.kupiedi.R;
 
 public class Finder {
