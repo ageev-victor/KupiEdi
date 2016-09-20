@@ -23,16 +23,9 @@ public class Finder {
         initFoodDB();
     }
 
-    public ArrayList<String> getFoodNames() {
-        return foodNames;
-    }
-
     public ArrayList<String> getMatches(CharSequence ch) {
         for (String name : foodNames) {
-            //Log.d("Info", substring);
-            //Log.d("Info", ch.toString());
             if (name.startsWith(String.valueOf(ch))) {
-                //Log.d("Info", "1111");
                 foodMatches.add(name);
             }
         }
@@ -52,8 +45,8 @@ public class Finder {
                 inputStream.close();
             }
         } catch (Throwable t) {
-           /* Toast.makeText(context.getApplicationContext(),
-                    "Exception: " + t.toString(), Toast.LENGTH_LONG).show();*/
+            Toast.makeText(context.getApplicationContext(),
+                    "Exception: " + t.toString(), Toast.LENGTH_LONG).show();
         }
     }
 }

@@ -31,15 +31,6 @@
             android:textStyle="italic" />
 
         <ImageButton
-            android:id="@+id/voiceButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="20dp"
-            android:background="#00ffffff"
-            android:onClick="recVoice"
-            android:src="@drawable/rec_voice_48" />
-
-        <ImageButton
             android:id="@+id/btnAddFood"
             android:layout_width="50dp"
             android:layout_height="50dp"

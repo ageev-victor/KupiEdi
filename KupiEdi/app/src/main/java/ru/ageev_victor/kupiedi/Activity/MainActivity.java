@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
     Button foodBtn3;
     EditText edTxtEnterFood;
     static TableLayout tableListFood;
-    private static int RESULT_SPEECH_TO_TEXT = 3;
     public static ArrayList<Row> rows = new ArrayList<>();
     public static Typeface defaultTypeface;
     public static int defaultTextSize = 18;
@@ -227,9 +226,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                finder.foodMatches.clear();
                 doAllButtonsInvisible();
                 ArrayList<String> foodMatches = finder.getMatches(s);
-                Log.d("Info", String.valueOf(foodMatches.size()));
                 if (s.length() == 0 & (mainLayout.getChildCount() > 2)) {
                     mainLayout.removeView(buttonsLayout);
                 } else {
@@ -237,7 +236,6 @@ public class MainActivity extends AppCompatActivity {
                         mainLayout.removeView(buttonsLayout);
                     }
                     mainLayout.addView(buttonsLayout);
-
                     switch (foodMatches.size()) {
                         case 1: {
                             foodBtn1.setVisibility(View.VISIBLE);
@@ -251,20 +249,13 @@ public class MainActivity extends AppCompatActivity {
                             foodBtn2.setVisibility(View.VISIBLE);
                             break;
                         }
-
                     }
-
                     if (foodMatches.size() >= 3) {
                         foodBtn1.setText(foodMatches.get(0));
-                        Log.d("Info", String.valueOf(foodMatches.get(0)));
                         foodBtn2.setText(foodMatches.get(1));
-                        Log.d("Info", String.valueOf(foodMatches.get(1)));
                         foodBtn3.setText(foodMatches.get(2));
-                        Log.d("Info", String.valueOf(foodMatches.get(2)));
                         doAllButtonsVisible();
                     }
-
-                    foodMatches.clear();
                 }
             }
 
@@ -387,42 +378,6 @@ public class MainActivity extends AppCompatActivity {
                     .show();
         } else {
             Toast.makeText(this, R.string.no_saved_lists, Toast.LENGTH_LONG).show();
-        }
-    }
-
-    public void recVoice(View view) {
-        Intent speechIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        speechIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        speechIntent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.speak_please));
-        startActivityForResult(speechIntent, RESULT_SPEECH_TO_TEXT);
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        ArrayList<String> adjectives = new ArrayList<>();
-        adjectives.add("ой");
-        adjectives.add("ый");
-        adjectives.add("ий");
-        adjectives.add("ое");
-        adjectives.add("ее");
-        if (requestCode == RESULT_SPEECH_TO_TEXT && resultCode == RESULT_OK) {
-            ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            String[] foodNames = matches.get(0).split(" ");
-            for (int i = 0; i < foodNames.length; i++) {
-                String endWord = foodNames[i].substring(foodNames[i].length() - 2, foodNames[i].length());
-                if (adjectives.contains(endWord)) {
-                    Row row = new Row(this, foodNames[i] + " " + foodNames[i + 1]);
-                    tableListFood.addView(row);
-                    rows.add(row);
-                    i++;
-                } else {
-                    Row row = new Row(this, foodNames[i]);
-                    tableListFood.addView(row);
-                    rows.add(row);
-                }
-            }
         }
     }
 }
