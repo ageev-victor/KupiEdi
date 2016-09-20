@@ -243,14 +243,15 @@ public class MainActivity extends AppCompatActivity {
                     if (mainLayout.getChildCount() > 2) {
                         mainLayout.removeView(buttonsLayout);
                     }
-                    mainLayout.addView(buttonsLayout);
                     switch (foodMatches.size()) {
                         case 1: {
+                            mainLayout.addView(buttonsLayout);
                             foodBtn1.setVisibility(View.VISIBLE);
                             foodBtn1.setText(foodMatches.get(0));
                             break;
                         }
                         case 2: {
+                            mainLayout.addView(buttonsLayout);
                             foodBtn1.setText(foodMatches.get(0));
                             foodBtn2.setText(foodMatches.get(1));
                             foodBtn1.setVisibility(View.VISIBLE);
@@ -259,6 +260,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     if (foodMatches.size() >= 3) {
+                        mainLayout.addView(buttonsLayout);
                         foodBtn1.setText(foodMatches.get(0));
                         foodBtn2.setText(foodMatches.get(1));
                         foodBtn3.setText(foodMatches.get(2));
