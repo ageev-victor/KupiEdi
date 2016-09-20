@@ -32,6 +32,8 @@
         (Работает только при подключенном интернете)</string>
     <string name="name_must_contain_letters">Название должно состоять только из букв!!!</string>
     <string name="max_font_size_warning">Размер шрифта должен быть в диапазоне 14 - 22</string>
+    <string name="about_text">Первая версия программы, может содержать массу ошибок.
+    Просьба все найденные недочеты/ошибки отправлять через кнопку ниже.</string>
     <string-array name="fontStyle">
         <item>"Альбионик"</item>
         <item>"Альтер"</item>

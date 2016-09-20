@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     static TableLayout tableListFood;
     public static ArrayList<Row> rows = new ArrayList<>();
     public static Typeface defaultTypeface;
-    public static int defaultTextSize = 18;
+    public static int defaultTextSize = 19;
     LinearLayout buttonsLayout;
     RelativeLayout mainLayout;
     Finder finder;
@@ -223,8 +223,6 @@ public class MainActivity extends AppCompatActivity {
         setupFloatingButton();
         addOnClickListenersToButtons();
         addOnClickListenerToEditText();
-        setFontSize();
-        setFontStyle();
         buttonsLayout = (LinearLayout) findViewById(R.id.buttonsLayout);
         mainLayout = (RelativeLayout) findViewById(R.id.main_layout);
     }

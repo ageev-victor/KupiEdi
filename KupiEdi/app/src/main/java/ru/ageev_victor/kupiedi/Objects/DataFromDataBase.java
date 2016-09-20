@@ -4,14 +4,14 @@ package ru.ageev_victor.kupiedi.Objects;
 public class DataFromDataBase {
 
     String productName;
-    int productCount;
+    double productCount;
 
-    public DataFromDataBase(String productName, int productCount) {
+    public DataFromDataBase(String productName, double productCount) {
         this.productCount = productCount;
         this.productName = productName;
     }
 
-    public int getProductCount() {
+    public double getProductCount() {
         return productCount;
     }
 

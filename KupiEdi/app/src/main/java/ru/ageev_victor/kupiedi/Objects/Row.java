@@ -17,7 +17,7 @@ public class Row extends TableRow {
     EditText edTxtFoodCunt;
     ImageButton btnRemoveRow;
     TextView txtRowFoodName;
-    int foodCount = 1;
+    double foodCount = 1;
 
     public Row(Context context, String foodName) {
         super(context);
@@ -86,7 +86,7 @@ public class Row extends TableRow {
         return txtRowFoodName;
     }
 
-    public void setFoodCount(int foodCount) {
+    public void setFoodCount(double foodCount) {
         edTxtFoodCunt.setTypeface(MainActivity.defaultTypeface);
         edTxtFoodCunt.setText(String.valueOf(foodCount));
         edTxtFoodCunt.setTextSize(MainActivity.defaultTextSize);

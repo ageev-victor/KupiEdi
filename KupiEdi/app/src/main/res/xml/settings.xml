@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <EditTextPreference
-        android:defaultValue = "17"
+        android:defaultValue = "19"
         android:dialogTitle="Введите размер шрифта (от 14 до 22)"
         android:key="@string/settings"
         android:summary="Устанавливает новый размер шрифта"
@@ -11,7 +11,7 @@
         android:key="@string/font_style"
         android:title="Стиль для шрифта"
         android:summary="Устанавливает стиль для шрифта"
-        android:defaultValue= "Альбионик"
+        android:defaultValue= "БаухаусЛайт"
         android:selectable="true"
         android:entries="@array/fontStyle"
         android:entryValues="@array/fontStyle"
