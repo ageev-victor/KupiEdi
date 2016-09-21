@@ -4,8 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".Activity.MainActivity"
-    android:background="@drawable/font_universal">
+    tools:context=".Activity.MainActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:logo="@mipmap/ic_launcher"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -23,7 +37,7 @@
             android:layout_height="100dp"
             android:indeterminateDrawable="@drawable/spinner_ring"
             android:indeterminateOnly="true"
-            android:layout_above="@+id/textView2"
+            android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />
 
         <TextView
@@ -32,7 +46,9 @@
             android:layout_height="wrap_content"
             android:text="Загрузка..."
             android:textSize="20dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_below="@+id/progressBar"
+            android:layout_alignLeft="@+id/progressBar"
+            android:layout_alignStart="@+id/progressBar"
+            android:layout_marginTop="29dp" />
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>
