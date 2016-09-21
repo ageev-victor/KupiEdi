@@ -8,6 +8,7 @@ import android.content.pm.ActivityInfo;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.speech.RecognizerIntent;
 import android.support.design.widget.FloatingActionButton;
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     static TableLayout tableListFood;
     public static ArrayList<Row> rows = new ArrayList<>();
     public static Typeface defaultTypeface;
-    public static int defaultTextSize = 19;
+    public static int defaultTextSize;
     LinearLayout buttonsLayout;
     RelativeLayout mainLayout;
     Finder finder;
@@ -91,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -119,14 +122,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void setFontSize() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        defaultTextSize = (int) Float.parseFloat(prefs.getString(getString(R.string.settings), "16"));
-        if (defaultTextSize < 14 | defaultTextSize > 22) {
+        defaultTextSize = (int) Float.parseFloat(prefs.getString(getString(R.string.settings), "19"));
+        if (defaultTextSize < 12 | defaultTextSize > 26) {
             Toast.makeText(this, R.string.max_font_size_warning, Toast.LENGTH_SHORT).show();
         } else {
             for (Row row : rows) {
                 row.getTxtRowFoodName().setTextSize(defaultTextSize);
                 row.getEdTxtFoodCunt().setTextSize(defaultTextSize);
-                Log.d("Size", String.valueOf(defaultTextSize));
             }
         }
     }
@@ -135,14 +137,10 @@ public class MainActivity extends AppCompatActivity {
     private void setFontStyle() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String font = prefs.getString(getString(R.string.font_style), "");
-        if (font.contains(getString(R.string.amoderno)))
-            defaultTypeface = Typeface.createFromAsset(getResources().getAssets(), "amoderno.ttf");
-        if (font.contains(getString(R.string.aalbionic_bold)))
-            defaultTypeface = Typeface.createFromAsset(getResources().getAssets(), "aalbionic_bold.ttf");
-        if (font.contains(getString(R.string.aalternanr)))
-            defaultTypeface = Typeface.createFromAsset(getResources().getAssets(), "aalternanr.ttf");
-        if (font.contains(getString(R.string.bauhauslightctt_bold)))
-            defaultTypeface = Typeface.createFromAsset(getResources().getAssets(), "bauhauslightctt_bold.ttf");
+        if (font.contains(getString(R.string.amoderno))) defaultTypeface = Typeface.createFromAsset(getResources().getAssets(), "amoderno.ttf");
+        if (font.contains(getString(R.string.aalbionic_bold))) defaultTypeface = Typeface.createFromAsset(getResources().getAssets(), "aalbionic_bold.ttf");
+        if (font.contains(getString(R.string.aalternanr))) defaultTypeface = Typeface.createFromAsset(getResources().getAssets(), "aalternanr.ttf");
+        if (font.contains(getString(R.string.bauhauslightctt_bold))) defaultTypeface = Typeface.createFromAsset(getResources().getAssets(), "bauhauslightctt_bold.ttf");
         for (Row row : rows) {
             edTxtEnterFood.setTypeface(defaultTypeface);
             row.getTxtRowFoodName().setTypeface(defaultTypeface);
@@ -225,6 +223,8 @@ public class MainActivity extends AppCompatActivity {
         addOnClickListenerToEditText();
         buttonsLayout = (LinearLayout) findViewById(R.id.buttonsLayout);
         mainLayout = (RelativeLayout) findViewById(R.id.main_layout);
+        defaultTypeface = Typeface.createFromAsset(getResources().getAssets(), "bauhauslightctt_bold.ttf");
+        edTxtEnterFood.setTypeface(defaultTypeface);
     }
 
     private void addOnClickListenerToEditText() {

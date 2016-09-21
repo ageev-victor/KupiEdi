@@ -1,14 +1,20 @@
 package ru.ageev_victor.kupiedi.Objects;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
+import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ru.ageev_victor.kupiedi.Activity.MainActivity;
 import ru.ageev_victor.kupiedi.R;
