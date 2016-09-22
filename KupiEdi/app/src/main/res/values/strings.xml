@@ -34,6 +34,8 @@
     <string name="max_font_size_warning">Размер шрифта должен быть в диапазоне 12 - 26</string>
     <string name="about_text">Первая версия программы, может содержать массу ошибок.
     Просьба все найденные недочеты/ошибки отправлять через кнопку ниже.</string>
+    <string name="new_style_set">Новый стиль установлен</string>
+    <string name="new_font_size_set">Новый размер шрифта установлен</string>
     <string-array name="fontStyle">
         <item>"Альбионик"</item>
         <item>"Альтер"</item>

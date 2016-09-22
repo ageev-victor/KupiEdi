@@ -13,7 +13,7 @@ import ru.ageev_victor.kupiedi.R;
 public class Finder {
 
     private Context context;
-    public ArrayList<String> foodNames = new ArrayList<>();
+    public  ArrayList<String> foodNames = new ArrayList<>();
     public ArrayList<String> foodMatches = new ArrayList<>();
 
     public Finder(Context context) {

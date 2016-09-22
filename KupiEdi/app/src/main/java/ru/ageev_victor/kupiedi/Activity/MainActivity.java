@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
                 if (mainLayout.getChildCount() == 3) {
                     edTxtEnterFood.setText("");
                     mainLayout.removeView(buttonsLayout);
-
                 }
                 Snackbar.make(view, R.string.list_cleared, Snackbar.LENGTH_SHORT)
                         .setAction("Action", null)
@@ -91,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
 
 
     @Override
@@ -131,16 +129,21 @@ public class MainActivity extends AppCompatActivity {
                 row.getEdTxtFoodCunt().setTextSize(defaultTextSize);
             }
         }
+
     }
 
 
     private void setFontStyle() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String font = prefs.getString(getString(R.string.font_style), "");
-        if (font.contains(getString(R.string.amoderno))) defaultTypeface = Typeface.createFromAsset(getResources().getAssets(), "amoderno.ttf");
-        if (font.contains(getString(R.string.aalbionic_bold))) defaultTypeface = Typeface.createFromAsset(getResources().getAssets(), "aalbionic_bold.ttf");
-        if (font.contains(getString(R.string.aalternanr))) defaultTypeface = Typeface.createFromAsset(getResources().getAssets(), "aalternanr.ttf");
-        if (font.contains(getString(R.string.bauhauslightctt_bold))) defaultTypeface = Typeface.createFromAsset(getResources().getAssets(), "bauhauslightctt_bold.ttf");
+        if (font.contains(getString(R.string.amoderno)))
+            defaultTypeface = Typeface.createFromAsset(getResources().getAssets(), "amoderno.ttf");
+        if (font.contains(getString(R.string.aalbionic_bold)))
+            defaultTypeface = Typeface.createFromAsset(getResources().getAssets(), "aalbionic_bold.ttf");
+        if (font.contains(getString(R.string.aalternanr)))
+            defaultTypeface = Typeface.createFromAsset(getResources().getAssets(), "aalternanr.ttf");
+        if (font.contains(getString(R.string.bauhauslightctt_bold)))
+            defaultTypeface = Typeface.createFromAsset(getResources().getAssets(), "bauhauslightctt_bold.ttf");
         for (Row row : rows) {
             edTxtEnterFood.setTypeface(defaultTypeface);
             row.getTxtRowFoodName().setTypeface(defaultTypeface);
@@ -235,35 +238,31 @@ public class MainActivity extends AppCompatActivity {
                 finder.foodMatches.clear();
                 doAllButtonsInvisible();
                 ArrayList<String> foodMatches = finder.getMatches(s);
-                if (s.length() == 0 & (mainLayout.getChildCount() > 2)) {
+                if (s.length() == 0 || (mainLayout.getChildCount() > 2)) {
                     mainLayout.removeView(buttonsLayout);
-                } else {
-                    if (mainLayout.getChildCount() > 2) {
-                        mainLayout.removeView(buttonsLayout);
+                }
+                switch (foodMatches.size()) {
+                    case 1: {
+                        mainLayout.addView(buttonsLayout);
+                        foodBtn1.setVisibility(View.VISIBLE);
+                        foodBtn1.setText(foodMatches.get(0));
+                        break;
                     }
-                    switch (foodMatches.size()) {
-                        case 1: {
-                            mainLayout.addView(buttonsLayout);
-                            foodBtn1.setVisibility(View.VISIBLE);
-                            foodBtn1.setText(foodMatches.get(0));
-                            break;
-                        }
-                        case 2: {
-                            mainLayout.addView(buttonsLayout);
-                            foodBtn1.setText(foodMatches.get(0));
-                            foodBtn2.setText(foodMatches.get(1));
-                            foodBtn1.setVisibility(View.VISIBLE);
-                            foodBtn2.setVisibility(View.VISIBLE);
-                            break;
-                        }
-                    }
-                    if (foodMatches.size() >= 3) {
+                    case 2: {
                         mainLayout.addView(buttonsLayout);
                         foodBtn1.setText(foodMatches.get(0));
                         foodBtn2.setText(foodMatches.get(1));
-                        foodBtn3.setText(foodMatches.get(2));
-                        doAllButtonsVisible();
+                        foodBtn1.setVisibility(View.VISIBLE);
+                        foodBtn2.setVisibility(View.VISIBLE);
+                        break;
                     }
+                }
+                if (foodMatches.size() >= 3 & foodMatches.size() < finder.foodNames.size()) {
+                    mainLayout.addView(buttonsLayout);
+                    foodBtn1.setText(foodMatches.get(0));
+                    foodBtn2.setText(foodMatches.get(1));
+                    foodBtn3.setText(foodMatches.get(2));
+                    doAllButtonsVisible();
                 }
             }
 
