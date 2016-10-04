@@ -36,6 +36,7 @@
     Просьба все найденные недочеты/ошибки отправлять через кнопку ниже.</string>
     <string name="new_style_set">Новый стиль установлен</string>
     <string name="new_font_size_set">Новый размер шрифта установлен</string>
+    <string name="error_load_list_from_db">"Не удалось загрузить список "</string>
     <string-array name="fontStyle">
         <item>"Альбионик"</item>
         <item>"Альтер"</item>

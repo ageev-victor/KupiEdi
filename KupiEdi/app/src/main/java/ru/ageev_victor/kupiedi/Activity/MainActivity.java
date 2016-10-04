@@ -8,9 +8,7 @@ import android.content.pm.ActivityInfo;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.speech.RecognizerIntent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -18,7 +16,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,9 +28,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import ru.ageev_victor.kupiedi.Objects.DataFromDataBase;
@@ -60,10 +54,32 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        finder = new Finder(this.getApplicationContext());
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         initViews();
-        finder = new Finder(this.getApplicationContext());
+    }
+
+    private void initViews() {
+        foodBtn1 = (Button) findViewById(R.id.btnFood1);
+        foodBtn2 = (Button) findViewById(R.id.btnFood2);
+        foodBtn3 = (Button) findViewById(R.id.btnFood3);
+        btnAddFood = (ImageButton) findViewById(R.id.btnAddFood);
+        edTxtEnterFood = (EditText) findViewById(R.id.edTxtEnterFood);
+        tableListFood = (TableLayout) findViewById(R.id.tableListFood);
+        assert tableListFood != null;
+        tableListFood.setShrinkAllColumns(true);
+        tableListFood.setColumnStretchable(0, true);
+        tableListFood.setColumnStretchable(1, true);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        setupFloatingButton();
+        addOnClickListenersToButtons();
+        addOnClickListenerToEditText();
+        buttonsLayout = (LinearLayout) findViewById(R.id.buttonsLayout);
+        mainLayout = (RelativeLayout) findViewById(R.id.main_layout);
+        defaultTypeface = Typeface.createFromAsset(getResources().getAssets(), "bauhauslightctt_bold.ttf");
+        edTxtEnterFood.setTypeface(defaultTypeface);
     }
 
     private void setupFloatingButton() {
@@ -106,16 +122,9 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         if (!(rows.isEmpty())) {
             saveList("tempTable");
+            rows.clear();
         }
 
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (!(rows.isEmpty())) {
-            saveList("tempTable");
-        }
     }
 
     private void setFontSize() {
@@ -208,27 +217,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void initViews() {
-        foodBtn1 = (Button) findViewById(R.id.btnFood1);
-        foodBtn2 = (Button) findViewById(R.id.btnFood2);
-        foodBtn3 = (Button) findViewById(R.id.btnFood3);
-        btnAddFood = (ImageButton) findViewById(R.id.btnAddFood);
-        edTxtEnterFood = (EditText) findViewById(R.id.edTxtEnterFood);
-        tableListFood = (TableLayout) findViewById(R.id.tableListFood);
-        assert tableListFood != null;
-        tableListFood.setShrinkAllColumns(true);
-        tableListFood.setColumnStretchable(0, true);
-        tableListFood.setColumnStretchable(1, true);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        setupFloatingButton();
-        addOnClickListenersToButtons();
-        addOnClickListenerToEditText();
-        buttonsLayout = (LinearLayout) findViewById(R.id.buttonsLayout);
-        mainLayout = (RelativeLayout) findViewById(R.id.main_layout);
-        defaultTypeface = Typeface.createFromAsset(getResources().getAssets(), "bauhauslightctt_bold.ttf");
-        edTxtEnterFood.setTypeface(defaultTypeface);
-    }
+
 
     private void addOnClickListenerToEditText() {
         edTxtEnterFood.addTextChangedListener(new TextWatcher() {
@@ -331,15 +320,20 @@ public class MainActivity extends AppCompatActivity {
         rows.remove(row);
     }
 
-    public void saveList(String tableName) {
+    public void saveList(final String tableName) {
         DatabaseHelper.getInstance(this).createTable(tableName);
-        for (Row row : rows) {
-            ContentValues values = new ContentValues();
-            values.put(DatabaseHelper.PRODUCT_NAME, (String) row.getTxtRowFoodName().getText());
-            values.put(DatabaseHelper.PRODUCT_COUNT, row.getEdTxtFoodCunt().getText().toString());
-            DatabaseHelper.getInstance(this).getDataBase().insert(tableName, null, values);
+        for (final Row row : rows) {
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    ContentValues values = new ContentValues();
+                    values.put(DatabaseHelper.PRODUCT_NAME, (String) row.getTxtRowFoodName().getText());
+                    values.put(DatabaseHelper.PRODUCT_COUNT, row.getEdTxtFoodCunt().getText().toString());
+                    DatabaseHelper.getInstance(getApplicationContext()).getDataBase().insert(tableName, null, values);
+                }
+            });
+            thread.start();
         }
-        rows.clear();
     }
 
     public void addFoodToTable(View view) {
@@ -368,6 +362,9 @@ public class MainActivity extends AppCompatActivity {
             }
             dataArray.clear();
         } catch (SQLiteException e) {
+            if (!e.getMessage().contains("tempTable")) {
+                Toast.makeText(this, getString(R.string.error_load_list_from_db) + list, Toast.LENGTH_LONG).show();
+            }
         }
     }
 

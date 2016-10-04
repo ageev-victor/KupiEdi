@@ -3,10 +3,10 @@ package ru.ageev_victor.kupiedi.Objects;
 
 public class DataFromDataBase {
 
-    String productName;
-    double productCount;
+    private String productName;
+    private double productCount;
 
-    public DataFromDataBase(String productName, double productCount) {
+    DataFromDataBase(String productName, double productCount) {
         this.productCount = productCount;
         this.productName = productName;
     }

@@ -15,9 +15,9 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
     private static int DATABASE_VERSION = 1;
     public static final String PRODUCT_NAME = "product_name";
     public static final String PRODUCT_COUNT = "product_count";
-    public static final String DATABASE_NAME = "kupiedi.db";
-    public final SQLiteDatabase dataBase = getReadableDatabase();
-    public String tempTableName;
+    private static final String DATABASE_NAME = "kupiedi.db";
+    private final SQLiteDatabase dataBase = getReadableDatabase();
+    private String tempTableName;
     private static DatabaseHelper databaseHelper;
 
     public static DatabaseHelper getInstance(Context context) {
@@ -36,13 +36,16 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
     }
 
     public void createTable(String tableName) {
+
         tempTableName = tableName;
-        dataBase.execSQL("CREATE TABLE "
+        dataBase.execSQL("CREATE TABLE IF NOT EXISTS "
                 + tableName + " (" + BaseColumns._ID
                 + " integer primary key autoincrement, " + PRODUCT_NAME
                 + " text not null, " + PRODUCT_COUNT
                 + " double)");
     }
+
+
 
     public ArrayList<DataFromDataBase> getData(String table) {
         ArrayList<DataFromDataBase> dataFromDataBases = new ArrayList<>();
@@ -61,14 +64,6 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-    }
-
-    private void addFoodToDB(String table, ArrayList<String> foods) {
-        for (String food : foods) {
-            ContentValues values = new ContentValues();
-            values.put(DatabaseHelper.PRODUCT_NAME, food);
-            this.getDataBase().insert(table, null, values);
-        }
     }
 
     public CharSequence[] loadList() {
@@ -94,4 +89,5 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
     public void deleteTable(String table) {
         dataBase.execSQL("DROP TABLE IF EXISTS " + table);
     }
+
 }

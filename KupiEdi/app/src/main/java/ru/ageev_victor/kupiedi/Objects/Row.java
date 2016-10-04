@@ -1,20 +1,14 @@
 package ru.ageev_victor.kupiedi.Objects;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.Typeface;
-import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import ru.ageev_victor.kupiedi.Activity.MainActivity;
 import ru.ageev_victor.kupiedi.R;
@@ -23,12 +17,15 @@ public class Row extends TableRow {
     EditText edTxtFoodCunt;
     ImageButton btnRemoveRow;
     TextView txtRowFoodName;
-    double foodCount = 1;
 
     public Row(Context context, String foodName) {
         super(context);
         initViews(foodName);
         addViewsToRow();
+    }
+
+    public Row(Context context) {
+        super(context);
     }
 
     private void addViewsToRow() {
@@ -58,17 +55,17 @@ public class Row extends TableRow {
 
     private void initEdTxtFoodCunt() {
         InputFilter[] filterArray = new InputFilter[1];
-        filterArray[0] = new InputFilter.LengthFilter(4);
+        filterArray[0] = new InputFilter.LengthFilter(6);
         edTxtFoodCunt.setFilters(filterArray);
         edTxtFoodCunt.setMaxLines(1);
-        edTxtFoodCunt.setText(String.valueOf(foodCount));
+        edTxtFoodCunt.setText("1");
         edTxtFoodCunt.setTextColor(Color.BLACK);
         edTxtFoodCunt.setTextSize(MainActivity.defaultTextSize);
         edTxtFoodCunt.setTypeface(MainActivity.defaultTypeface);
         edTxtFoodCunt.setInputType(InputType.TYPE_CLASS_PHONE);
     }
 
-    private void initBtnRemoveRow() {
+    public void initBtnRemoveRow() {
         btnRemoveRow.setBackgroundResource(R.drawable.btn_delete_normal);
         btnRemoveRow.setOnClickListener(new OnClickListener() {
             @Override
