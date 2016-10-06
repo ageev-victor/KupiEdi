@@ -1,10 +1,7 @@
 <resources>
     <string name="action_settings">Settings</string>
     <string name="app_name">Купи еды</string>
-    <string name="menu_back_btn">Сменить фон</string>
     <string name="menu_save_btn">Сохранить список</string>
-    <string name="save_option_1">Опция сохрания 1</string>
-    <string name="save_option_2">Опция сохрания 2</string>
     <string name="menu_load_btn">Загрузить список</string>
     <string name="changeFont">Выбрать шрифт</string>
     <string name="title_activity_settings">Settings</string>
@@ -13,7 +10,7 @@
     <string name="delListFromDb">Удалить список</string>
     <string name="settings">Настройки</string>
     <string name="font_style">font_style</string>
-    <string name="sendErrorToDeveloper">Сообщить об ошибке!</string>
+    <string name="sendErrorToDeveloper">Отправить сообщение:</string>
     <string name="no_saved_lists">Нет сохраненных списков!</string>
     <string name="list_delete">Список удален</string>
     <string name="list_is_load">Список загружен</string>
@@ -26,17 +23,18 @@
     <string name="amoderno">Амодерно</string>
     <string name="list_cleared">Список очищен</string>
     <string name="write_your_problem">Опишите вашу проблему или вопрос:</string>
-    <string name="my_mail">fesswtrafesswtra@gmail.com</string>
+    <string name="my_mail">ageev.victor.v@gmail.com</string>
     <string name="question_bug">Вопрос/Баг</string>
     <string name="speak_please">Говорите:
         (Работает только при подключенном интернете)</string>
-    <string name="name_must_contain_letters">Название должно состоять только из букв!!!</string>
-    <string name="max_font_size_warning">Размер шрифта должен быть в диапазоне 12 - 26</string>
-    <string name="about_text">Первая версия программы, может содержать массу ошибок.
+    <string name="name_must_contain_letters">Название должно начинаться с буквы!</string>
+    <string name="max_font_size_warning">Размер шрифта должен быть в диапазоне 12 – 26</string>
+    <string name="about_text">Первая версия программы, может содержать ошибки.
     Просьба все найденные недочеты/ошибки отправлять через кнопку ниже.</string>
     <string name="new_style_set">Новый стиль установлен</string>
     <string name="new_font_size_set">Новый размер шрифта установлен</string>
     <string name="error_load_list_from_db">"Не удалось загрузить список "</string>
+    <string name="loading">Идет загрузка…</string>
     <string-array name="fontStyle">
         <item>"Альбионик"</item>
         <item>"Альтер"</item>

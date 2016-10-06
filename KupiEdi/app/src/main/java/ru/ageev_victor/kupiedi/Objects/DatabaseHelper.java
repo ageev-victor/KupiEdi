@@ -1,13 +1,10 @@
 package ru.ageev_victor.kupiedi.Objects;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
-
 import java.util.ArrayList;
 
 public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
@@ -17,7 +14,6 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
     public static final String PRODUCT_COUNT = "product_count";
     private static final String DATABASE_NAME = "kupiedi.db";
     private final SQLiteDatabase dataBase = getReadableDatabase();
-    private String tempTableName;
     private static DatabaseHelper databaseHelper;
 
     public static DatabaseHelper getInstance(Context context) {
@@ -37,7 +33,6 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
 
     public void createTable(String tableName) {
 
-        tempTableName = tableName;
         dataBase.execSQL("CREATE TABLE IF NOT EXISTS "
                 + tableName + " (" + BaseColumns._ID
                 + " integer primary key autoincrement, " + PRODUCT_NAME

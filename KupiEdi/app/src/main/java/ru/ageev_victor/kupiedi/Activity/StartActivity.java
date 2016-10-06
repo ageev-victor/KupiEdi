@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
 import ru.ageev_victor.kupiedi.R;
 
-public class StartActivity extends AppCompatActivity {
+public class
+StartActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -7,7 +7,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
-
 import ru.ageev_victor.kupiedi.R;
 
 public class AboutActivity extends AppCompatActivity {

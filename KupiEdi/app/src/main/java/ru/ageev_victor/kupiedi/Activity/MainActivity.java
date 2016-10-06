@@ -27,7 +27,6 @@ import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 
 import ru.ageev_victor.kupiedi.Objects.DataFromDataBase;
@@ -129,10 +128,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void setFontSize() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        defaultTextSize = (int) Float.parseFloat(prefs.getString(getString(R.string.settings), "19"));
-        if (defaultTextSize < 12 | defaultTextSize > 26) {
+        int  defaultTextSize_temp = (int) Float.parseFloat(prefs.getString(getString(R.string.settings), "19"));
+        if (defaultTextSize_temp < 12 | defaultTextSize_temp > 26) {
             Toast.makeText(this, R.string.max_font_size_warning, Toast.LENGTH_SHORT).show();
         } else {
+            defaultTextSize = defaultTextSize_temp;
             for (Row row : rows) {
                 row.getTxtRowFoodName().setTextSize(defaultTextSize);
                 row.getEdTxtFoodCunt().setTextSize(defaultTextSize);

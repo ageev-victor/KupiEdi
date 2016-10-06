@@ -1,6 +1,5 @@
 package ru.ageev_victor.kupiedi.Objects;
 
-
 public class DataFromDataBase {
 
     private String productName;

@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TableRow;
 import android.widget.TextView;
-
 import ru.ageev_victor.kupiedi.Activity.MainActivity;
 import ru.ageev_victor.kupiedi.R;
 
