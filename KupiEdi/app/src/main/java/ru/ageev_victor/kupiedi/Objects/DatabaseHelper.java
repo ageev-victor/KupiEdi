@@ -37,7 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
                 + tableName + " (" + BaseColumns._ID
                 + " integer primary key autoincrement, " + PRODUCT_NAME
                 + " text not null, " + PRODUCT_COUNT
-                + " double)");
+                + " float)");
     }
 
 
@@ -50,7 +50,7 @@ public class DatabaseHelper extends SQLiteOpenHelper implements BaseColumns {
                 null, null, null);
         while (cursor.moveToNext()) {
             String productName = cursor.getString(cursor.getColumnIndex(PRODUCT_NAME));
-            double productCount = cursor.getDouble(cursor.getColumnIndex(DatabaseHelper.PRODUCT_COUNT));
+            float productCount = cursor.getFloat(cursor.getColumnIndex(DatabaseHelper.PRODUCT_COUNT));
             dataFromDataBases.add(new DataFromDataBase(productName, productCount));
         }
         cursor.close();

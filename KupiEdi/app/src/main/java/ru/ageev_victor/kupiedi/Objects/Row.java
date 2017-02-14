@@ -4,11 +4,13 @@ import android.content.Context;
 import android.graphics.Color;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TableRow;
 import android.widget.TextView;
+
 import ru.ageev_victor.kupiedi.Activity.MainActivity;
 import ru.ageev_victor.kupiedi.R;
 
@@ -16,10 +18,13 @@ public class Row extends TableRow {
     EditText edTxtFoodCunt;
     ImageButton btnRemoveRow;
     TextView txtRowFoodName;
+    static int btn_delete_drawableRes = (R.drawable.btn_delete_normal);
+    private String foodname;
 
     public Row(Context context, String foodName) {
         super(context);
-        initViews(foodName);
+        this.foodname = foodName;
+        initViews();
         addViewsToRow();
     }
 
@@ -33,10 +38,8 @@ public class Row extends TableRow {
         this.addView(btnRemoveRow);
     }
 
-    private void initViews(String foodName) {
-        this.setBackgroundResource(R.drawable.row);
+    private void initViews() {
         createViews();
-        txtRowFoodName.setText(foodName);
         setParamsToViews();
     }
 
@@ -44,6 +47,7 @@ public class Row extends TableRow {
         initTxtRowFoodName();
         initEdTxtFoodCunt();
         initBtnRemoveRow();
+        this.setBackgroundResource(R.drawable.row);
     }
 
     private void createViews() {
@@ -56,6 +60,7 @@ public class Row extends TableRow {
         InputFilter[] filterArray = new InputFilter[1];
         filterArray[0] = new InputFilter.LengthFilter(6);
         edTxtFoodCunt.setFilters(filterArray);
+        edTxtFoodCunt.setGravity(Gravity.CENTER_HORIZONTAL);
         edTxtFoodCunt.setMaxLines(1);
         edTxtFoodCunt.setText("1");
         edTxtFoodCunt.setTextColor(Color.BLACK);
@@ -65,7 +70,7 @@ public class Row extends TableRow {
     }
 
     public void initBtnRemoveRow() {
-        btnRemoveRow.setBackgroundResource(R.drawable.btn_delete_normal);
+        btnRemoveRow.setBackgroundResource(btn_delete_drawableRes);
         btnRemoveRow.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,6 +80,7 @@ public class Row extends TableRow {
     }
 
     private void initTxtRowFoodName() {
+        txtRowFoodName.setText(foodname);
         txtRowFoodName.setTextSize(MainActivity.defaultTextSize);
         txtRowFoodName.setTextColor(Color.BLACK);
         txtRowFoodName.setTypeface(MainActivity.defaultTypeface);
@@ -88,9 +94,13 @@ public class Row extends TableRow {
         return txtRowFoodName;
     }
 
-    public void setFoodCount(double foodCount) {
+    public void setFoodCount(float foodCount) {
+        if (String.valueOf(foodCount).contains(".0")) {
+            edTxtFoodCunt.setText(String.valueOf((int) foodCount));
+        } else {
+            edTxtFoodCunt.setText(String.valueOf(foodCount));
+        }
         edTxtFoodCunt.setTypeface(MainActivity.defaultTypeface);
-        edTxtFoodCunt.setText(String.valueOf(foodCount));
         edTxtFoodCunt.setTextSize(MainActivity.defaultTextSize);
     }
 }

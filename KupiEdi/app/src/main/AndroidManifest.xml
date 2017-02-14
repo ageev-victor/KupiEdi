@@ -14,16 +14,13 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan">
-        </activity>
-        <activity android:name=".Activity.SettingsActivity" />
-        <activity android:name=".Activity.AboutActivity">
-        </activity>
-        <activity android:name=".Activity.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activity.SettingsActivity" />
+        <activity android:name=".Activity.AboutActivity">
+        </activity>
     </application>
-
 </manifest>

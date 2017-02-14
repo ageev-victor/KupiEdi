@@ -1,5 +1,7 @@
 <resources>
     <string name="action_settings">Settings</string>
+    <string name="ok">Ок</string>
+    <string name="no">"Нет"</string>
     <string name="app_name">Купи еды</string>
     <string name="menu_save_btn">Сохранить список</string>
     <string name="menu_load_btn">Загрузить список</string>
@@ -16,25 +18,24 @@
     <string name="list_is_load">Список загружен</string>
     <string name="list_save">Список сохранен</string>
     <string name="enter_name_list">Введите название списка:</string>
-    <string name="ok">OK</string>
+    <string name="createNewList">Новый</string>
+    <string name="chooseExistList">Существующий</string>
     <string name="aalbionic_bold">Альбионик</string>
     <string name="aalternanr">Альтер</string>
     <string name="bauhauslightctt_bold">БаухаусЛайт</string>
     <string name="amoderno">Амодерно</string>
     <string name="list_cleared">Список очищен</string>
-    <string name="write_your_problem">Опишите вашу проблему или вопрос:</string>
+    <string name="write_your_problem">Опишите вашу проблему или предложение:</string>
     <string name="my_mail">ageev.victor.v@gmail.com</string>
     <string name="question_bug">Вопрос/Баг</string>
-    <string name="speak_please">Говорите:
-        (Работает только при подключенном интернете)</string>
-    <string name="name_must_contain_letters">Название должно начинаться с буквы!</string>
+    <string name="name_must_contain_letters">Название должно начинаться с буквы и не содержать пробелов!</string>
     <string name="max_font_size_warning">Размер шрифта должен быть в диапазоне 12 – 26</string>
-    <string name="about_text">Первая версия программы, может содержать ошибки.
-    Просьба все найденные недочеты/ошибки отправлять через кнопку ниже.</string>
+    <string name="about_text">Просьба предложения и найденные ошибки отправлять через кнопку ниже: </string>
     <string name="new_style_set">Новый стиль установлен</string>
     <string name="new_font_size_set">Новый размер шрифта установлен</string>
     <string name="error_load_list_from_db">"Не удалось загрузить список "</string>
     <string name="loading">Идет загрузка…</string>
+    <string name="add_food">Добавить</string>
     <string-array name="fontStyle">
         <item>"Альбионик"</item>
         <item>"Альтер"</item>

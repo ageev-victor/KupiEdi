@@ -21,12 +21,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.Toast;
+
 import java.util.ArrayList;
 
 import ru.ageev_victor.kupiedi.Objects.DataFromDataBase;
@@ -37,48 +37,58 @@ import ru.ageev_victor.kupiedi.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    ImageButton btnAddFood;
+    Button btnAddFood;
     Button foodBtn1;
     Button foodBtn2;
     Button foodBtn3;
     EditText edTxtEnterFood;
-    static TableLayout tableListFood;
-    public static ArrayList<Row> rows = new ArrayList<>();
-    public static Typeface defaultTypeface;
-    public static int defaultTextSize;
     LinearLayout buttonsLayout;
     RelativeLayout mainLayout;
-    Finder finder;
+    private Finder finder;
+    Toolbar toolbar;
+    protected static ArrayList<Row> rows = new ArrayList<>();
+    public static Typeface defaultTypeface;
+    public static int defaultTextSize;
+    static TableLayout tableListFood;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        finder = new Finder(this.getApplicationContext());
+        finder = new Finder(this);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         initViews();
+        setTypeFace();
+        setSettingsToTableListFood();
+        setSupportActionBar(toolbar);
+        setupFloatingButton();
+        addOnClickListenersToButtons();
+        addOnClickListenerToEditText();
     }
 
     private void initViews() {
         foodBtn1 = (Button) findViewById(R.id.btnFood1);
         foodBtn2 = (Button) findViewById(R.id.btnFood2);
         foodBtn3 = (Button) findViewById(R.id.btnFood3);
-        btnAddFood = (ImageButton) findViewById(R.id.btnAddFood);
+        btnAddFood = (Button) findViewById(R.id.btnAddFood);
         edTxtEnterFood = (EditText) findViewById(R.id.edTxtEnterFood);
         tableListFood = (TableLayout) findViewById(R.id.tableListFood);
+        buttonsLayout = (LinearLayout) findViewById(R.id.buttonsLayout);
+        mainLayout = (RelativeLayout) findViewById(R.id.main_layout);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+    }
+
+    private void setTypeFace() {
+        defaultTypeface = Typeface.createFromAsset(getResources().getAssets(), "bauhauslightctt_bold.ttf");
+        edTxtEnterFood.setTypeface(defaultTypeface);
+    }
+
+    private void setSettingsToTableListFood() {
         assert tableListFood != null;
         tableListFood.setShrinkAllColumns(true);
         tableListFood.setColumnStretchable(0, true);
         tableListFood.setColumnStretchable(1, true);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        setupFloatingButton();
-        addOnClickListenersToButtons();
-        addOnClickListenerToEditText();
-        buttonsLayout = (LinearLayout) findViewById(R.id.buttonsLayout);
-        mainLayout = (RelativeLayout) findViewById(R.id.main_layout);
-        defaultTypeface = Typeface.createFromAsset(getResources().getAssets(), "bauhauslightctt_bold.ttf");
-        edTxtEnterFood.setTypeface(defaultTypeface);
     }
 
     private void setupFloatingButton() {
@@ -128,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setFontSize() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        int  defaultTextSize_temp = (int) Float.parseFloat(prefs.getString(getString(R.string.settings), "19"));
+        int defaultTextSize_temp = (int) Float.parseFloat(prefs.getString(getString(R.string.settings), "16"));
         if (defaultTextSize_temp < 12 | defaultTextSize_temp > 26) {
             Toast.makeText(this, R.string.max_font_size_warning, Toast.LENGTH_SHORT).show();
         } else {
@@ -162,41 +172,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        final EditText dialogSaveEdText = new EditText(this);
+        final CharSequence[] saveLists = DatabaseHelper.getInstance(this).loadList();
         switch (item.getItemId()) {
             case R.id.savelist:
-                final EditText dialogSaveEdText = new EditText(this);
-                new AlertDialog.Builder(MainActivity.this)
-                        .setTitle(getString(R.string.enter_name_list))
-                        .setView(dialogSaveEdText)
-                        .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                try {
-                                    saveList(dialogSaveEdText.getText().toString());
-                                    Toast.makeText(getApplicationContext(), R.string.list_save, Toast.LENGTH_SHORT).show();
-                                } catch (RuntimeException r) {
-                                    Toast.makeText(getApplicationContext(), R.string.name_must_contain_letters, Toast.LENGTH_SHORT).show();
-                                }
-
-                            }
-                        })
-                        .create()
-                        .show();
+                saveListAlertDialog(dialogSaveEdText, saveLists);
                 break;
             case R.id.loadList:
-                final CharSequence[] lists = DatabaseHelper.getInstance(this).loadList();
-                if (lists.length > 0) {
-                    new AlertDialog.Builder(this)
-                            .setItems(lists, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    tableListFood.removeAllViews();
-                                    loadTable(lists[i].toString());
-                                    Toast.makeText(getApplicationContext(), R.string.list_is_load, Toast.LENGTH_SHORT).show();
-                                }
-                            })
-                            .create()
-                            .show();
+                final CharSequence[] loadLists = DatabaseHelper.getInstance(this).loadList();
+                if (loadLists.length > 0) {
+                    loadListAlertDialog(loadLists);
                 } else {
                     Toast.makeText(this, R.string.no_saved_lists, Toast.LENGTH_LONG).show();
                 }
@@ -217,6 +202,78 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void saveListAlertDialog(final EditText dialogSaveEdText, final CharSequence[] saveLists) {
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle("Создать новый список или выбрать существующий?")
+                .setPositiveButton(getString(R.string.createNewList), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        createListAlertDialog(dialogSaveEdText);
+                    }
+                })
+                .setNegativeButton(R.string.chooseExistList, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (saveLists.length > 0) {
+                            chooseExistListAlertDialog(saveLists);
+                        } else {
+                            Toast.makeText(MainActivity.this, R.string.no_saved_lists, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                })
+                .create()
+                .show();
+    }
+
+    private void loadListAlertDialog(final CharSequence[] loadLists) {
+        new AlertDialog.Builder(this)
+                .setItems(loadLists, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        tableListFood.removeAllViews();
+                        loadTable(loadLists[i].toString());
+                        Toast.makeText(getApplicationContext(), R.string.list_is_load, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .create()
+                .show();
+    }
+
+    private void chooseExistListAlertDialog(final CharSequence[] saveLists) {
+        new AlertDialog.Builder(MainActivity.this)
+                .setItems(saveLists, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        try {
+                            saveList(String.valueOf(saveLists[i]));
+                            Toast.makeText(getApplicationContext(), R.string.list_save, Toast.LENGTH_SHORT).show();
+                        } catch (RuntimeException r) {
+                            Toast.makeText(getApplicationContext(), R.string.name_must_contain_letters, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .create()
+                .show();
+    }
+
+    private void createListAlertDialog(final EditText dialogSaveEdText) {
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle(getString(R.string.enter_name_list))
+                .setView(dialogSaveEdText)
+                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        try {
+                            saveList(dialogSaveEdText.getText().toString());
+                            Toast.makeText(getApplicationContext(), R.string.list_save, Toast.LENGTH_SHORT).show();
+                        } catch (RuntimeException r) {
+                            Toast.makeText(getApplicationContext(), R.string.name_must_contain_letters, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                })
+                .create()
+                .show();
+    }
 
 
     private void addOnClickListenerToEditText() {
@@ -282,22 +339,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Row row = new Row(getApplicationContext(), foodBtn1.getText().toString());
-                rows.add(row);
-                tableListFood.addView(row);
-                edTxtEnterFood.setText("");
-                doAllButtonsInvisible();
-                mainLayout.removeView(buttonsLayout);
+                setOnClickListenerToButton(row);
             }
         });
         foodBtn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Row row = new Row(getApplicationContext(), foodBtn2.getText().toString());
-                rows.add(row);
-                tableListFood.addView(row);
-                edTxtEnterFood.setText("");
-                doAllButtonsInvisible();
-                mainLayout.removeView(buttonsLayout);
+                setOnClickListenerToButton(row);
 
             }
         });
@@ -305,14 +354,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Row row = new Row(getApplicationContext(), foodBtn3.getText().toString());
-                rows.add(row);
-                tableListFood.addView(row);
-                edTxtEnterFood.setText("");
-                doAllButtonsInvisible();
-                mainLayout.removeView(buttonsLayout);
+                setOnClickListenerToButton(row);
 
             }
         });
+    }
+
+    private void setOnClickListenerToButton(Row row) {
+        rows.add(row);
+        tableListFood.addView(row);
+        edTxtEnterFood.setText("");
+        doAllButtonsInvisible();
+        mainLayout.removeView(buttonsLayout);
     }
 
     public static void removeRow(TableRow row) {
@@ -321,6 +374,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void saveList(final String tableName) {
+        DatabaseHelper.getInstance(this).deleteTable(tableName);
         DatabaseHelper.getInstance(this).createTable(tableName);
         for (final Row row : rows) {
             Thread thread = new Thread(new Runnable() {

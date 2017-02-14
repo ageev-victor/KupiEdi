@@ -6,86 +6,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".Activity.MainActivity">
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/font_food"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/edTxtEnterFood"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:background="@drawable/font_food_name"
-            android:hint="Название :"
-            android:inputType="text"
-            android:maxLength="20"
-            android:paddingLeft="10dp"
-            android:textStyle="italic" />
-
-        <ImageButton
-            android:id="@+id/btnAddFood"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="#00ffffff"
-            android:onClick="addFoodToTable"
-            android:src="@drawable/btn_add_normal" />
-
-    </LinearLayout>
+    tools:context=".Activity.MainActivity"
+    android:background="@android:color/background_light">
 
     <LinearLayout
         android:id="@+id/buttonsLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@+id/linearLayout"
-        android:background="@drawable/layout_buttons_font"
-        android:gravity="center_vertical|center_horizontal">
+        android:gravity="center_vertical|center_horizontal"
+        android:background="@drawable/buttonsfont">
 
         <Button
             android:id="@+id/btnFood1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:maxLines="2"
-            android:layout_margin="3dp"
-            android:background="@drawable/buttonsfont"
-            android:textSize="10dp"
+            android:textSize="9dp"
             android:visibility="invisible"
-            android:padding="1dp"
-            android:gravity="center_vertical|center_horizontal" />
+            android:gravity="center_vertical|center_horizontal"
+
+            style="@style/Widget.AppCompat.Button"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/buttonfont"
+            android:layout_marginBottom="2dp" />
 
         <Button
             android:id="@+id/btnFood2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:maxLines="2"
-            android:layout_margin="3dp"
-            android:background="@drawable/buttonsfont"
-            android:textSize="10dp"
+            android:textSize="9dp"
             android:visibility="invisible"
-            android:padding="1dp"
-            android:gravity="center_vertical|center_horizontal" />
+            android:gravity="center_vertical|center_horizontal"
+            style="@style/Widget.AppCompat.Button"
+
+            android:layout_marginTop="2dp"
+            android:background="@drawable/buttonfont"
+            android:layout_marginBottom="2dp" />
 
         <Button
             android:id="@+id/btnFood3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:maxLines="2"
-            android:layout_margin="3dp"
-            android:background="@drawable/buttonsfont"
-            android:textSize="10dp"
+            android:textSize="9dp"
             android:visibility="invisible"
-            android:padding="1dp"
-            android:gravity="center_vertical|center_horizontal" />
+            android:gravity="center_vertical|center_horizontal"
+            style="@style/Widget.AppCompat.Button"
+
+            android:layout_marginTop="2dp"
+            android:background="@drawable/buttonfont"
+            android:layout_marginBottom="2dp" />
     </LinearLayout>
 
 
@@ -93,8 +65,8 @@
         android:id="@+id/frameLyout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/main_font"
-        android:layout_marginTop="50dp">
+        android:layout_marginTop="50dp"
+        android:background="@drawable/main_font">
 
 
         <ScrollView
@@ -106,20 +78,59 @@
             android:layout_below="@+id/frameLyout"
             android:layout_gravity="center"
             android:layout_marginBottom="45dp"
-            android:layout_marginLeft="13dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="50dp">
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp">
 
             <TableLayout
                 android:id="@+id/tableListFood"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="8dp"
+                android:stretchColumns="true"
+                android:shrinkColumns="true">
 
             </TableLayout>
         </ScrollView>
 
     </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:background="@drawable/food_names_layout_font"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <EditText
+            android:id="@+id/edTxtEnterFood"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Введите название :"
+            android:inputType="text"
+            android:maxLength="20"
+            android:textStyle="italic"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp" />
+
+        <Button
+            android:id="@+id/btnAddFood"
+            android:layout_width="match_parent"
+            android:text="@string/add_food"
+            android:onClick="addFoodToTable"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:layout_gravity="center_vertical"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_margin="2dp" />
+
+    </LinearLayout>
 
 
 </RelativeLayout>
